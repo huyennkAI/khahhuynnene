@@ -24,6 +24,45 @@
     }
   });
 
+  // Toán học: cho marked bỏ qua nội dung trong $...$ và $$...$$ rồi render thẳng
+  // bằng KaTeX. Nếu không, marked sẽ xử lý "_" (subscript) thành <em>, nuốt "\\",
+  // làm hỏng công thức (KaTeX không nhận ra delimiter -> hiện mã thô).
+  function renderTex(tex, displayMode) {
+    try {
+      return window.katex.renderToString(tex.trim(), {
+        displayMode: displayMode,
+        throwOnError: false
+      });
+    } catch (e) {
+      return '<code class="math-error">' + escapeHtml(tex) + "</code>";
+    }
+  }
+
+  marked.use({
+    extensions: [
+      {
+        name: "blockMath",
+        level: "block",
+        start: function (src) { var i = src.indexOf("$$"); return i < 0 ? undefined : i; },
+        tokenizer: function (src) {
+          var m = /^\$\$([\s\S]+?)\$\$/.exec(src);
+          if (m) return { type: "blockMath", raw: m[0], text: m[1] };
+        },
+        renderer: function (token) { return renderTex(token.text, true); }
+      },
+      {
+        name: "inlineMath",
+        level: "inline",
+        start: function (src) { var i = src.indexOf("$"); return i < 0 ? undefined : i; },
+        tokenizer: function (src) {
+          var m = /^\$([^\$\n]+?)\$/.exec(src);
+          if (m) return { type: "inlineMath", raw: m[0], text: m[1] };
+        },
+        renderer: function (token) { return renderTex(token.text, false); }
+      }
+    ]
+  });
+
   function slugify(text) {
     return text.toLowerCase().trim()
       .replace(/[àáạảãâầấậẩẫăằắặẳẵ]/g, "a")
