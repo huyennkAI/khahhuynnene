@@ -102,6 +102,13 @@
           "desc": "Khử nhiễu dần, suy ra mục tiêu dự đoán nhiễu, nền của Stable Diffusion.",
           "file": "content/diffusion-models.md",
           "tags": ["diffusion", "ddpm", "denoising", "score matching"]
+        },
+        {
+          "slug": "energy-based-models",
+          "title": "Mô hình dựa trên năng lượng (Energy-Based)",
+          "desc": "Phân phối Boltzmann, pha dương/âm, Langevin, score matching, NCE.",
+          "file": "content/energy-based-models.md",
+          "tags": ["energy based model", "ebm", "boltzmann", "langevin", "mcmc"]
         }
       ]
     }
