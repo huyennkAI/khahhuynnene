@@ -59,42 +59,49 @@
       ]
     },
     {
-      "title": "Mô hình sinh sâu",
+      "title": "Mô hình sinh sâu (Deep Generative Models)",
       "items": [
         {
           "slug": "mo-hinh-sinh-tong-quan",
-          "title": "Tổng quan mô hình sinh",
-          "desc": "Sinh vs phân biệt, bốn họ mô hình và các đánh đổi cơ bản.",
+          "title": "Giới thiệu mô hình sinh sâu",
+          "desc": "Sinh vs phân biệt, MLE = cực tiểu KL, bốn họ mô hình và tam giác đánh đổi.",
           "file": "content/mo-hinh-sinh-tong-quan.md",
-          "tags": ["generative", "tong quan", "deep generative model"]
+          "tags": ["generative model", "tong quan", "deep generative model", "mle", "kl"]
+        },
+        {
+          "slug": "autoregressive-models",
+          "title": "Mô hình tự hồi quy (Autoregressive)",
+          "desc": "Quy tắc chuỗi, likelihood chính xác, nền của GPT - PixelCNN - WaveNet.",
+          "file": "content/autoregressive-models.md",
+          "tags": ["autoregressive", "chain rule", "gpt", "likelihood"]
+        },
+        {
+          "slug": "normalizing-flows",
+          "title": "Normalizing Flows",
+          "desc": "Hàm khả nghịch, công thức đổi biến, likelihood chính xác và lấy mẫu nhanh.",
+          "file": "content/normalizing-flows.md",
+          "tags": ["normalizing flow", "change of variables", "realnvp", "glow"]
         },
         {
           "slug": "autoencoder-vae",
           "title": "Autoencoder & VAE",
-          "desc": "Không gian ẩn, chặn dưới ELBO và mẹo tái tham số hóa.",
+          "desc": "Không gian ẩn, chứng minh ELBO, mẹo tái tham số hóa.",
           "file": "content/autoencoder-vae.md",
-          "tags": ["vae", "autoencoder", "elbo", "latent"]
+          "tags": ["vae", "autoencoder", "elbo", "latent variable", "variational inference"]
         },
         {
           "slug": "gan",
           "title": "Mạng đối kháng sinh (GAN)",
-          "desc": "Trò chơi minimax giữa generator và discriminator.",
+          "desc": "Trò chơi minimax, chứng minh discriminator tối ưu và JS divergence.",
           "file": "content/gan.md",
-          "tags": ["gan", "adversarial", "generator"]
+          "tags": ["gan", "adversarial", "generator", "discriminator", "js divergence"]
         },
         {
           "slug": "diffusion-models",
           "title": "Mô hình khuếch tán (Diffusion)",
-          "desc": "Khử nhiễu dần dần, nền tảng của Stable Diffusion và DALL·E.",
+          "desc": "Khử nhiễu dần, suy ra mục tiêu dự đoán nhiễu, nền của Stable Diffusion.",
           "file": "content/diffusion-models.md",
-          "tags": ["diffusion", "ddpm", "denoising"]
-        },
-        {
-          "slug": "autoregressive-flow",
-          "title": "Autoregressive & Normalizing Flows",
-          "desc": "Hai họ mô hình tính được likelihood chính xác.",
-          "file": "content/autoregressive-flow.md",
-          "tags": ["autoregressive", "normalizing flow", "likelihood"]
+          "tags": ["diffusion", "ddpm", "denoising", "score matching"]
         }
       ]
     }

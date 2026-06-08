@@ -14,9 +14,9 @@ $$L(\theta) = \frac{1}{n} \sum_{i=1}^{n} \left( y_i - \hat{y}_i \right)^2$$
 
 $$L(\theta) = -\frac{1}{n} \sum_{i=1}^{n} \sum_{c} y_{i,c} \log \hat{y}_{i,c}$$
 
-Mục tiêu huấn luyện là tìm $\theta^\*$ sao cho:
+Mục tiêu huấn luyện là tìm $\theta^{*}$ sao cho:
 
-$$\theta^\* = \arg\min_{\theta} \; L(\theta)$$
+$$\theta^{*} = \arg\min_{\theta} \; L(\theta)$$
 
 ## Gradient Descent
 
