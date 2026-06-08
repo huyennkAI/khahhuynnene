@@ -1,53 +1,157 @@
-# Mô hình tự hồi quy (Autoregressive)
+# Mô hình tự hồi quy (Autoregressive Models)
 
-> Mô hình tự hồi quy (autoregressive model) sinh dữ liệu **từng phần tử một**, mỗi phần tử dựa trên tất cả những gì đã sinh trước đó. Đây là họ mô hình sinh (generative model) đứng sau GPT, PixelCNN và WaveNet — và là họ duy nhất vừa cho likelihood chính xác vừa mở rộng tới hàng tỉ tham số.
+> Mô hình tự hồi quy (autoregressive model) là họ mô hình sinh dữ liệu bằng cách dự đoán **từng phần tử kế tiếp** từ các phần tử đã xuất hiện trước đó. Thay vì sinh toàn bộ dữ liệu trong một lần, mô hình xây dựng mẫu **từng bước một**:
+>
+> $$x_1 \rightarrow x_2 \rightarrow x_3 \rightarrow \cdots \rightarrow x_D$$
+>
+> Đây là nền tảng của các mô hình ngôn ngữ lớn như GPT, các mô hình sinh ảnh như PixelCNN, và các mô hình sinh âm thanh như WaveNet.
 
-## 1. Trực giác ra đời
+---
 
-Khó khăn trung tâm của mọi mô hình sinh là hằng số chuẩn hóa (normalizing constant) $Z_\theta = \int \tilde{p}_\theta(x)\, dx$ không tính nổi. Câu hỏi đặt ra:
+# 1. Động cơ ra đời
 
-> Liệu có cách phân tích $p(x)$ thành các mảnh, mỗi mảnh **tự chuẩn hóa được**?
+Mục tiêu của mô hình sinh (generative model) là học phân phối xác suất của dữ liệu:
 
-Câu trả lời đến từ một sự thật xác suất **luôn đúng** — quy tắc chuỗi (chain rule). Bất kỳ phân phối hợp nào cũng tách được thành tích các xác suất có điều kiện một chiều (one-dimensional conditionals). Mỗi xác suất một chiều thì dễ chuẩn hóa (chỉ cần softmax trên một biến). Bài toán $D$ chiều khổng lồ biến thành $D$ bài toán một chiều.
+$$p(x)$$
 
-## 2. Khắc phục điều gì (lập luận lý thuyết)
+Nếu học được phân phối này, ta có thể:
 
-- **Né hằng số chuẩn hóa $Z_\theta$:** với biến rời rạc, mỗi $p_\theta(x_i \mid x_{<i})$ là softmax trên $K$ giá trị, hằng số chuẩn hóa chỉ là tổng $\sum_{k} e^{f_k}$ — **hữu hạn và tính được**. Tích của các phân phối đã chuẩn hóa vẫn chuẩn hóa, nên $p_\theta(x)$ tự động là mật độ hợp lệ.
-- **Cho likelihood chính xác:** không xấp xỉ như VAE (chỉ ELBO), không né tránh như GAN (không có likelihood).
-- **Tận dụng phụ thuộc dài (long-range dependency)** khi ghép với kiến trúc mạnh như Transformer.
+* sinh dữ liệu mới,
+* đánh giá xác suất của một mẫu,
+* nén dữ liệu,
+* hoặc suy luận về cấu trúc của dữ liệu.
 
-## 3. Lý thuyết: phân tích theo quy tắc chuỗi
+Tuy nhiên, dữ liệu thực tế thường có **số chiều rất lớn**. Ví dụ:
 
-Với dữ liệu $x = (x_1, x_2, \dots, x_D)$, quy tắc chuỗi xác suất cho:
+* một câu văn có thể chứa hàng trăm tới hàng nghìn token,
+* một ảnh RGB $256 \times 256$ chứa gần $200{,}000$ giá trị pixel,
+* một đoạn âm thanh vài giây chứa hàng chục nghìn mẫu tín hiệu.
 
-$$p(x) = p(x_1)\, p(x_2 \mid x_1)\, p(x_3 \mid x_1, x_2) \cdots = \prod_{i=1}^{D} p(x_i \mid x_{<i})$$
+Nếu cố gắng mô hình hóa **trực tiếp** $p(x)$, ta thường vấp phải bài toán chuẩn hóa (normalization):
 
-trong đó ký hiệu $x_{<i} = (x_1, \dots, x_{i-1})$.
+$$p_\theta(x) = \frac{\tilde{p}_\theta(x)}{Z_\theta}, \qquad Z_\theta = \int \tilde{p}_\theta(x)\, dx$$
 
-### 3.1. Chứng minh quy tắc chuỗi
+Với dữ liệu nhiều chiều, hằng số chuẩn hóa (normalizing constant) $Z_\theta$ là một tích phân khổng lồ **không thể tính được**.
+
+Do đó, câu hỏi trung tâm là:
+
+> Liệu có thể biến bài toán mô hình hóa một phân phối nhiều chiều thành **nhiều bài toán đơn giản hơn** mà vẫn giữ nguyên ý nghĩa xác suất?
+
+Câu trả lời đến từ một định lý cơ bản của xác suất: **quy tắc chuỗi (chain rule)**.
+
+---
+
+# 2. Ý tưởng cốt lõi: phân rã bằng quy tắc chuỗi
+
+Một sự thật quan trọng là **bất kỳ phân phối hợp (joint distribution) nào cũng phân rã được thành tích các xác suất có điều kiện**.
+
+Với $x = (x_1, x_2, \ldots, x_D)$, ta luôn có:
+
+$$p(x) = \prod_{i=1}^{D} p(x_i \mid x_{<i})$$
+
+trong đó ký hiệu
+
+$$x_{<i} = (x_1, \ldots, x_{i-1})$$
+
+Viết tường minh hơn:
+
+$$p(x) = p(x_1)\, p(x_2 \mid x_1)\, p(x_3 \mid x_1, x_2) \cdots p(x_D \mid x_{<D})$$
+
+Đây **không phải** giả định hay xấp xỉ — mà là một đẳng thức **luôn đúng** với mọi phân phối xác suất.
+
+Điều đó có nghĩa: thay vì học trực tiếp $p(x)$, ta chỉ cần học các phân phối điều kiện $p(x_i \mid x_{<i})$. Nói đơn giản hơn:
+
+> Học cách **dự đoán phần tử tiếp theo** từ tất cả những gì đã xuất hiện trước đó.
+
+Đây chính là tư tưởng cốt lõi đứng sau GPT.
+
+---
+
+## 2.1. Chứng minh quy tắc chuỗi
 
 Xuất phát từ định nghĩa xác suất có điều kiện $p(a, b) = p(a)\, p(b \mid a)$, áp dụng đệ quy:
 
 $$
 \begin{aligned}
-p(x_1, \dots, x_D)
-&= p(x_1)\, p(x_2, \dots, x_D \mid x_1) \\
-&= p(x_1)\, p(x_2 \mid x_1)\, p(x_3, \dots, x_D \mid x_1, x_2) \\
-&= p(x_1)\, p(x_2 \mid x_1)\, p(x_3 \mid x_1, x_2)\, p(x_4, \dots, x_D \mid x_{\le 3}) \\
+p(x_1, \ldots, x_D)
+&= p(x_1)\, p(x_2, \ldots, x_D \mid x_1) \\
+&= p(x_1)\, p(x_2 \mid x_1)\, p(x_3, \ldots, x_D \mid x_1, x_2) \\
+&= p(x_1)\, p(x_2 \mid x_1)\, p(x_3 \mid x_1, x_2)\, p(x_4, \ldots, x_D \mid x_{\le 3}) \\
 &\;\;\vdots \\
-&= \prod_{i=1}^{D} p(x_i \mid x_1, \dots, x_{i-1}) \qquad \blacksquare
+&= \prod_{i=1}^{D} p(x_i \mid x_{<i}) \qquad \blacksquare
 \end{aligned}
 $$
 
-Phân tích này **không cần bất kỳ giả định nào** về dữ liệu — nó luôn đúng. Điểm tinh tế: ta chỉ *mô hình hóa* mỗi điều kiện bằng một mạng nơ-ron có tham số chung $\theta$:
+Phép phân rã này đúng với **mọi dữ liệu** và **mọi thứ tự** các biến. Điểm duy nhất cần học là các xác suất có điều kiện.
 
-$$p_\theta(x_i \mid x_{<i}) = \text{softmax}\big(f_\theta(x_{<i})\big)$$
+---
 
-### 3.2. Vì sao chuẩn hóa "miễn phí"? (chứng minh)
+# 3. Mô hình thực sự học cái gì?
 
-**Mệnh đề.** Nếu mỗi $p_\theta(x_i \mid x_{<i})$ là phân phối hợp lệ (tích phân/tổng bằng 1), thì $p_\theta(x) = \prod_i p_\theta(x_i \mid x_{<i})$ cũng là phân phối hợp lệ — không cần $Z_\theta$.
+Đến đây ta mới chỉ có một công thức xác suất. Để biến nó thành một mô hình học máy, ta cần một cách **biểu diễn** các xác suất $p(x_i \mid x_{<i})$.
 
-**Chứng minh** (trường hợp tổng quát, tích phân lùi từ biến cuối):
+Trong thực tế, ta dùng một mạng nơ-ron (neural network) với tham số $\theta$. Mạng nhận vào toàn bộ lịch sử $x_{<i}$ và xuất ra một vector logits:
+
+$$h_i = f_\theta(x_{<i})$$
+
+Sau đó áp dụng softmax để biến logits thành phân phối xác suất trên từ vựng:
+
+$$p_\theta(x_i \mid x_{<i}) = \text{softmax}(W h_i)$$
+
+Ví dụ, nếu từ vựng gồm bốn từ, mô hình có thể xuất ra:
+
+| Token | Xác suất |
+| --- | --- |
+| trí | 0.72 |
+| toán | 0.11 |
+| học | 0.09 |
+| máy | 0.08 |
+
+tức là mô hình tin rằng "trí" là token tiếp theo có khả năng cao nhất.
+
+Toàn bộ GPT, về bản chất, chỉ là một hàm $f_\theta$ rất lớn dùng để ước lượng các xác suất này.
+
+---
+
+# 4. Ví dụ trực quan với văn bản
+
+Giả sử câu:
+
+> Tôi thích học trí tuệ nhân tạo
+
+Sau khi tách token (tokenize):
+
+```text
+[Tôi] [thích] [học] [trí] [tuệ] [nhân] [tạo]
+```
+
+Theo quy tắc chuỗi:
+
+$$
+\begin{aligned}
+p(x) = \; & p(\text{Tôi}) \\
+\cdot\; & p(\text{thích} \mid \text{Tôi}) \\
+\cdot\; & p(\text{học} \mid \text{Tôi thích}) \\
+\cdot\; & p(\text{trí} \mid \text{Tôi thích học}) \\
+\cdot\; & \cdots
+\end{aligned}
+$$
+
+Khi nhìn thấy `Tôi thích học`, mô hình phải dự đoán `trí`. Sau đó với `Tôi thích học trí`, nó dự đoán `tuệ`, và cứ tiếp tục như vậy.
+
+---
+
+# 5. Vì sao chuẩn hóa được "miễn phí"?
+
+Một ưu điểm lớn của autoregressive model là **không cần hằng số chuẩn hóa toàn cục** $Z_\theta$.
+
+**Mệnh đề.** Nếu mỗi điều kiện $p_\theta(x_i \mid x_{<i})$ đã là phân phối hợp lệ (tổng/tích phân bằng 1):
+
+$$\sum_{x_i} p_\theta(x_i \mid x_{<i}) = 1 \quad \text{(hoặc } \textstyle\int p_\theta(x_i \mid x_{<i})\, dx_i = 1\text{)}$$
+
+thì tích của chúng, $p_\theta(x) = \prod_i p_\theta(x_i \mid x_{<i})$, **cũng là phân phối hợp lệ** trên toàn không gian — không cần $Z_\theta$.
+
+**Chứng minh** (trường hợp liên tục, tích phân lùi từ biến cuối):
 
 $$
 \begin{aligned}
@@ -58,43 +162,126 @@ $$
 \end{aligned}
 $$
 
-Lặp lại tích phân lùi cho $x_{D-1}, \dots, x_1$, mỗi lần một thừa số tích ra 1, cuối cùng còn đúng 1. $\blacksquare$
+Lặp lại tích phân lùi cho $x_{D-1}, \ldots, x_1$ — mỗi lần một thừa số tích ra $1$ — cuối cùng còn đúng $1$. $\blacksquare$
 
-### 3.3. Hàm mất mát: cực đại likelihood = cross-entropy
+Do đó:
 
-Cực đại log-likelihood trên tập dữ liệu tương đương cực tiểu negative log-likelihood:
+> Chỉ cần **từng bước dự đoán** được chuẩn hóa, **toàn bộ mô hình tự động** được chuẩn hóa.
 
-$$\mathcal{L}(\theta) = -\sum_{i=1}^{D} \log p_\theta(x_i \mid x_{<i})$$
+Đây là lý do autoregressive cho **likelihood chính xác** mà không phải xấp xỉ như VAE (chỉ có ELBO) hay né tránh như GAN (không có likelihood).
 
-Đây **chính xác** là mục tiêu "dự đoán phần tử kế tiếp (next-token prediction)" của các mô hình ngôn ngữ. Với biến rời rạc, mỗi số hạng là cross-entropy giữa phân phối dự đoán và one-hot của giá trị thật.
+---
+
+# 6. Huấn luyện diễn ra như thế nào?
+
+Sau khi đã có cách biểu diễn các xác suất điều kiện, ta cần tìm tham số $\theta$ sao cho dự đoán ngày càng gần dữ liệu thật.
+
+Likelihood của một chuỗi là:
+
+$$p_\theta(x) = \prod_i p_\theta(x_i \mid x_{<i})$$
+
+Lấy logarit để biến tích thành tổng (ổn định số học và dễ tối ưu):
+
+$$\log p_\theta(x) = \sum_i \log p_\theta(x_i \mid x_{<i})$$
+
+Vì vậy cực đại log-likelihood tương đương cực tiểu **negative log-likelihood (NLL)**:
+
+$$\mathcal{L}(\theta) = -\sum_i \log p_\theta(x_i \mid x_{<i})$$
+
+Với dữ liệu rời rạc, mỗi số hạng NLL chính là **cross-entropy** giữa phân phối dự đoán và one-hot của token thật. Đây **chính xác** là mục tiêu "dự đoán token kế tiếp (next-token prediction)" của các mô hình ngôn ngữ:
 
 ```python
 logits = model(x[:, :-1])
 loss = cross_entropy(logits.reshape(-1, V), x[:, 1:].reshape(-1))
 ```
 
-### 3.4. Liên hệ trực tiếp với bits-per-dim
+---
 
-Vì likelihood chính xác, ta đo được chất lượng nén:
+## 6.1. Chuẩn bị dữ liệu
 
-$$\text{bpd} = \frac{\mathcal{L}(\theta)}{D \log 2} = \frac{-\sum_i \log_2 p_\theta(x_i \mid x_{<i})}{D}$$
+Giả sử câu `Tôi thích học AI`. Ta dịch chuyển chuỗi một vị trí để tạo cặp input – target:
 
-Theo lý thuyết mã hóa của Shannon, đây đúng bằng số bit trung bình tối thiểu để mã hóa mỗi chiều dữ liệu — một dẫn chứng cho việc "mô hình sinh tốt = bộ nén tốt".
+Input:
 
-## 4. Vấn đề che mặt (masking)
+```text
+[Tôi] [thích] [học] [AI]
+```
 
-Khi huấn luyện, ta đưa cả chuỗi vào song song để tận dụng phần cứng, nhưng phải đảm bảo vị trí $i$ **không nhìn thấy** $x_{\ge i}$ — nếu không mô hình "gian lận" bằng cách copy đáp án.
+Target:
 
-- **PixelCNN** — masked convolution: mặt nạ trên kernel chỉ cho nhìn các điểm ảnh đã quét qua.
-- **Transformer (GPT)** — causal mask trong self-attention. Cụ thể, ma trận attention bị cộng một mặt nạ tam giác trên bằng $-\infty$ trước softmax:
+```text
+[thích] [học] [AI] [EOS]
+```
 
-$$\text{Attn}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}} + M\right) V, \qquad M_{ij} = \begin{cases} 0 & j \le i \\ -\infty & j > i \end{cases}$$
+Mô hình phải học mọi vị trí cùng lúc:
 
-Vì $e^{-\infty} = 0$, mọi trọng số chú ý tới tương lai bị triệt tiêu, đảm bảo tính nhân quả (causality) đúng theo phân tích quy tắc chuỗi.
+| Ngữ cảnh | Token đúng |
+| --- | --- |
+| Tôi | thích |
+| Tôi thích | học |
+| Tôi thích học | AI |
+| Tôi thích học AI | EOS |
 
-## 5. Sinh mẫu (sampling)
+Như vậy **một câu duy nhất** tạo ra **nhiều ví dụ huấn luyện**.
 
-Lấy mẫu là **tuần tự**: sinh $x_1$, đưa lại vào để sinh $x_2$, cứ thế tới $x_D$.
+---
+
+## 6.2. Teacher Forcing
+
+Một câu hỏi tự nhiên:
+
+> Khi dự đoán token thứ ba, mô hình có dùng các token mà chính nó sinh ra không?
+
+Câu trả lời là **không**. Trong huấn luyện, mô hình luôn được cung cấp **token thật** từ dữ liệu. Khi dự đoán `AI`, mô hình được thấy ngữ cảnh thật `Tôi thích học`, chứ không phải các token nó tự sinh.
+
+Kỹ thuật này gọi là **teacher forcing**. Nó giúp tối ưu ổn định hơn rất nhiều vì ngữ cảnh luôn đúng — nhưng cũng chính là nguồn gốc của *exposure bias* (mục 9).
+
+---
+
+# 7. Là mô hình tuần tự, tại sao GPT huấn luyện song song được?
+
+Thoạt nhìn autoregressive có vẻ bắt buộc xử lý tuần tự `x1 → x2 → x3 → x4`. Tuy nhiên, **trong huấn luyện toàn bộ chuỗi đã có sẵn** — ta không cần sinh token mới, chỉ cần dự đoán token kế tiếp ở **mọi vị trí cùng một lúc**.
+
+Cả câu `Tôi thích học AI` được đưa vào trong **một lần truyền xuôi (forward pass)**. Vấn đề còn lại là phải **ngăn mô hình nhìn thấy tương lai** — nếu không, vị trí $i$ sẽ "gian lận" bằng cách copy đáp án $x_{\ge i}$.
+
+---
+
+## 7.1. Causal Mask
+
+GPT dùng một **mặt nạ nhân quả (causal mask)** — ma trận tam giác trên bằng $-\infty$:
+
+$$M_{ij} = \begin{cases} 0 & j \le i \\ -\infty & j > i \end{cases}$$
+
+cộng vào điểm attention **trước** softmax:
+
+$$\text{Attn}(Q, K, V) = \text{softmax}\!\left(\frac{QK^\top}{\sqrt{d_k}} + M\right) V$$
+
+Vì $e^{-\infty} = 0$, mọi trọng số chú ý tới tương lai bị triệt tiêu. Nhờ đó:
+
+* token 1 chỉ thấy token 1,
+* token 2 chỉ thấy token 1–2,
+* token 3 chỉ thấy token 1–3,
+* ...
+
+Toàn bộ chuỗi vẫn được xử lý trong một forward pass, đảm bảo đúng tính nhân quả (causality) theo phân rã quy tắc chuỗi. Đây là lý do Transformer huấn luyện rất hiệu quả trên GPU.
+
+---
+
+# 8. Sinh dữ liệu sau khi huấn luyện
+
+Sau khi học xong, mô hình đã biết ước lượng $p(x_i \mid x_{<i})$. Khác với huấn luyện, lúc sinh ta **không còn biết token tương lai** — mô hình phải dùng chính các dự đoán của mình.
+
+Ví dụ với prompt `Tôi thích`, mô hình dự đoán:
+
+| Token | Xác suất |
+| --- | --- |
+| học | 0.65 |
+| ăn | 0.20 |
+| chơi | 0.15 |
+
+Lấy mẫu được `học`, chuỗi trở thành `Tôi thích học`, rồi tiếp tục dự đoán token kế tiếp. Quá trình lặp lại cho tới khi gặp token kết thúc (EOS).
+
+Mô tả tuần tự:
 
 ```text
 x1 ~ p(x1)
@@ -104,37 +291,76 @@ x3 ~ p(x3 | x1, x2)
 xD ~ p(xD | x_<D)
 ```
 
-Đây là nút thắt cổ chai về tốc độ: độ trễ $O(D)$ lần truyền mạng, không song song hóa được khi suy luận (mỗi bước cần kết quả bước trước).
+Đây là **nút thắt cổ chai về tốc độ**: độ trễ $O(D)$ lần truyền mạng, không song song hóa được khi suy luận vì mỗi bước cần kết quả của bước trước.
 
-## 6. Các kiến trúc tham số hóa điều kiện
+---
 
-| Mô hình | Miền | Cách nắm bối cảnh $x_{<i}$ |
+# 9. Vấn đề Exposure Bias
+
+Một hệ quả quan trọng nảy sinh từ sự khác biệt giữa huấn luyện và suy luận:
+
+* **Huấn luyện** — đầu vào là token **thật** (teacher forcing).
+* **Suy luận** — đầu vào là token **do chính mô hình sinh ra**.
+
+Nếu mô hình mắc một lỗi nhỏ ở bước đầu, lỗi đó đi vào ngữ cảnh của bước sau, khiến dự đoán càng lệch:
+
+```text
+Sai → Sai hơn → Sai rất nhiều
+```
+
+Phân phối điều kiện lúc huấn luyện và lúc suy luận lệch nhau, lỗi **tích lũy dọc chuỗi**. Hiện tượng này gọi là **exposure bias** — một hạn chế lý thuyết quan trọng của autoregressive learning.
+
+---
+
+# 10. Các kiến trúc autoregressive nổi bật
+
+Đến đây, toàn bộ lập luận chỉ dựa trên xác suất; ta chưa nói gì về kiến trúc cụ thể. Điều duy nhất mô hình cần là một cơ chế đủ mạnh để **biểu diễn ngữ cảnh** $x_{<i}$.
+
+| Mô hình | Dữ liệu | Cơ chế nắm bối cảnh |
 | --- | --- | --- |
 | **PixelRNN** | Ảnh | LSTM quét điểm ảnh |
-| **PixelCNN** | Ảnh | Tích chập có mặt nạ |
+| **PixelCNN** | Ảnh | Tích chập có mặt nạ (masked convolution) |
 | **WaveNet** | Âm thanh | Tích chập giãn (dilated convolution) |
 | **GPT** | Văn bản | Self-attention nhân quả |
 
-Lưu ý lý thuyết: chất lượng mô hình autoregressive phụ thuộc **kiến trúc nắm bối cảnh**, không phụ thuộc phân tích quy tắc chuỗi (vốn luôn đúng). Transformer thắng vì self-attention cho đường đi gradient ngắn $O(1)$ giữa hai vị trí bất kỳ, so với $O(D)$ của RNN — đó là lý do nó nắm phụ thuộc dài tốt hơn.
+Điểm chung của tất cả là cùng một phân rã:
 
-## 7. Trật tự (ordering) — một điểm yếu lý thuyết
+$$p(x) = \prod_i p(x_i \mid x_{<i})$$
 
-Quy tắc chuỗi đúng với **mọi** thứ tự hoán vị của các biến. Nhưng mô hình phải **chọn một thứ tự cố định**. Với văn bản, thứ tự trái-sang-phải là tự nhiên. Với ảnh, không có thứ tự "đúng" nào — buộc phải áp đặt (ví dụ quét raster trên-xuống, trái-phải), và lựa chọn này ảnh hưởng chất lượng. Đây là một thiên lệch quy nạp (inductive bias) nhân tạo mà các họ khác (như diffusion) không mắc phải.
+Khác biệt **duy nhất** là cách biểu diễn lịch sử. Transformer thắng thế vì self-attention cho đường đi gradient ngắn $O(1)$ giữa hai vị trí bất kỳ (so với $O(D)$ của RNN), nên nắm phụ thuộc dài (long-range dependency) tốt hơn hẳn.
 
-## 8. Ưu điểm (có dẫn chứng lý thuyết)
+---
 
-- **Likelihood chính xác** — từ mục 3.2, không cần xấp xỉ; cho phép so sánh mô hình minh bạch qua bits-per-dim.
-- **Huấn luyện ổn định** — mục tiêu là cross-entropy lồi theo logits, không có động lực đối kháng (adversarial dynamics) như GAN; gradient có ý nghĩa ở mọi bước.
-- **Mở rộng tuyệt vời** — định luật tỉ lệ (scaling laws) cho thấy loss giảm đều theo lũy thừa của số tham số và dữ liệu; đây là nền của các mô hình ngôn ngữ lớn (LLM).
+# 11. Ưu điểm
 
-## 9. Nhược điểm (có dẫn chứng lý thuyết)
+* **Likelihood chính xác** — từ mục 5, không cần xấp xỉ; cho phép so sánh mô hình minh bạch qua bits-per-dim.
+* **Không cần xấp xỉ** như ELBO của VAE, cũng không có **động lực đối kháng (adversarial dynamics)** như GAN.
+* **Huấn luyện đơn giản và ổn định** bằng cross-entropy — mục tiêu lồi theo logits, gradient có ý nghĩa ở mọi bước.
+* **Mở rộng tuyệt vời** — định luật tỉ lệ (scaling laws) cho thấy loss giảm đều theo lũy thừa của số tham số và dữ liệu; đây là nền của các mô hình ngôn ngữ lớn (LLM).
+* Đặc biệt hiệu quả trên **dữ liệu tuần tự** như văn bản — lý do toàn bộ họ GPT đều là autoregressive.
 
-- **Lấy mẫu chậm $O(D)$** — từ mục 5, sinh tuần tự không song song hóa được; với ảnh độ phân giải cao $D$ rất lớn.
-- **Áp đặt thứ tự nhân tạo** — từ mục 7, gây thiên lệch với dữ liệu vốn không có thứ tự tự nhiên.
-- **Sai lệch phơi bày (exposure bias)** — khi huấn luyện, điều kiện $x_{<i}$ là dữ liệu thật (teacher forcing); khi sinh, điều kiện là mẫu do chính mô hình tạo ra. Phân phối điều kiện lúc huấn luyện và lúc suy luận lệch nhau, lỗi tích lũy dọc chuỗi.
+---
 
-## 10. Vị trí trong bức tranh chung
+# 12. Nhược điểm
+
+Chính lựa chọn sinh tuần tự cũng dẫn tới những hạn chế cơ bản.
+
+**Sinh mẫu chậm $O(D)$.** Muốn sinh $x_i$ phải biết trước $x_{<i}$, nên suy luận không song song hóa được; với ảnh độ phân giải cao, $D$ rất lớn.
+
+**Exposure bias.** Huấn luyện và suy luận dùng hai loại ngữ cảnh khác nhau (mục 9), gây tích lũy lỗi.
+
+**Phụ thuộc thứ tự.** Quy tắc chuỗi đúng với mọi hoán vị, nhưng mô hình buộc phải **chọn một thứ tự cố định**. Với văn bản, trái-sang-phải là tự nhiên; với ảnh thì không tồn tại thứ tự "đúng" — việc chọn cách quét pixel (ví dụ raster trên-xuống, trái-phải) là một **thiên lệch quy nạp (inductive bias)** nhân tạo mà các họ khác như diffusion không mắc phải.
+
+---
+
+# 13. Tổng kết
+
+Nhìn từ góc độ xác suất, autoregressive model **không phát minh ra một dạng phân phối mới**. Ý tưởng cốt lõi chỉ là tận dụng quy tắc chuỗi:
+
+$$p(x) = \prod_i p(x_i \mid x_{<i})$$
+
+để biến bài toán mô hình hóa một phân phối nhiều chiều thành bài toán **dự đoán phần tử tiếp theo**. Từ một nguyên lý xác suất rất đơn giản, kết hợp với các kiến trúc biểu diễn mạnh như Transformer, autoregressive đã trở thành nền tảng của hầu hết các mô hình ngôn ngữ hiện đại.
 
 Autoregressive đổi **tốc độ lấy mẫu** lấy **sự đơn giản và likelihood chính xác**. Với văn bản — vốn tuần tự — đây là lựa chọn tự nhiên và đang thống trị (GPT). Với ảnh, nó nhường ngôi cho diffusion vì điểm yếu tốc độ và thứ tự.
 
-> Bài tiếp theo, **Normalizing Flows**, giữ likelihood chính xác như autoregressive nhưng lấy mẫu **một bước** — đánh đổi lại bằng ràng buộc khả nghịch.
+> Bài tiếp theo, **Normalizing Flows**, vẫn giữ likelihood chính xác như autoregressive nhưng lấy mẫu **một bước** — đánh đổi lại bằng ràng buộc khả nghịch (invertibility) của phép biến đổi.
