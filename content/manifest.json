@@ -57,6 +57,46 @@
           "tags": ["transformer", "attention", "llm"]
         }
       ]
+    },
+    {
+      "title": "Mô hình sinh sâu",
+      "items": [
+        {
+          "slug": "mo-hinh-sinh-tong-quan",
+          "title": "Tổng quan mô hình sinh",
+          "desc": "Sinh vs phân biệt, bốn họ mô hình và các đánh đổi cơ bản.",
+          "file": "content/mo-hinh-sinh-tong-quan.md",
+          "tags": ["generative", "tong quan", "deep generative model"]
+        },
+        {
+          "slug": "autoencoder-vae",
+          "title": "Autoencoder & VAE",
+          "desc": "Không gian ẩn, chặn dưới ELBO và mẹo tái tham số hóa.",
+          "file": "content/autoencoder-vae.md",
+          "tags": ["vae", "autoencoder", "elbo", "latent"]
+        },
+        {
+          "slug": "gan",
+          "title": "Mạng đối kháng sinh (GAN)",
+          "desc": "Trò chơi minimax giữa generator và discriminator.",
+          "file": "content/gan.md",
+          "tags": ["gan", "adversarial", "generator"]
+        },
+        {
+          "slug": "diffusion-models",
+          "title": "Mô hình khuếch tán (Diffusion)",
+          "desc": "Khử nhiễu dần dần, nền tảng của Stable Diffusion và DALL·E.",
+          "file": "content/diffusion-models.md",
+          "tags": ["diffusion", "ddpm", "denoising"]
+        },
+        {
+          "slug": "autoregressive-flow",
+          "title": "Autoregressive & Normalizing Flows",
+          "desc": "Hai họ mô hình tính được likelihood chính xác.",
+          "file": "content/autoregressive-flow.md",
+          "tags": ["autoregressive", "normalizing flow", "likelihood"]
+        }
+      ]
     }
   ]
 }
