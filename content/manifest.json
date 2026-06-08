@@ -1,0 +1,62 @@
+{
+  "home": "",
+  "groups": [
+    {
+      "title": "Bắt đầu",
+      "items": [
+        {
+          "slug": "gioi-thieu",
+          "title": "Giới thiệu",
+          "desc": "Tổng quan website và bản đồ các chuyên đề lý thuyết AI.",
+          "file": "content/gioi-thieu.md",
+          "tags": ["overview", "ai"]
+        },
+        {
+          "slug": "ai-la-gi",
+          "title": "Trí tuệ nhân tạo là gì?",
+          "desc": "Định nghĩa, lịch sử và phân loại các nhánh của AI.",
+          "file": "content/ai-la-gi.md",
+          "tags": ["ai", "khai niem", "lich su"]
+        }
+      ]
+    },
+    {
+      "title": "Học máy",
+      "items": [
+        {
+          "slug": "hoc-may-co-ban",
+          "title": "Học máy cơ bản",
+          "desc": "Học có giám sát, không giám sát, tăng cường và quy trình huấn luyện.",
+          "file": "content/hoc-may-co-ban.md",
+          "tags": ["machine learning", "supervised", "unsupervised"]
+        },
+        {
+          "slug": "ham-mat-mat-toi-uu",
+          "title": "Hàm mất mát & Tối ưu hóa",
+          "desc": "Loss function, gradient descent và lan truyền ngược.",
+          "file": "content/ham-mat-mat-toi-uu.md",
+          "tags": ["loss", "gradient descent", "optimization"]
+        }
+      ]
+    },
+    {
+      "title": "Học sâu",
+      "items": [
+        {
+          "slug": "mang-no-ron",
+          "title": "Mạng nơ-ron nhân tạo",
+          "desc": "Perceptron, hàm kích hoạt và kiến trúc mạng nhiều lớp.",
+          "file": "content/mang-no-ron.md",
+          "tags": ["neural network", "deep learning", "perceptron"]
+        },
+        {
+          "slug": "transformer",
+          "title": "Kiến trúc Transformer",
+          "desc": "Cơ chế self-attention và nền tảng của các mô hình ngôn ngữ lớn.",
+          "file": "content/transformer.md",
+          "tags": ["transformer", "attention", "llm"]
+        }
+      ]
+    }
+  ]
+}

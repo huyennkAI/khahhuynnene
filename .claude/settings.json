@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx wrangler *)",
+      "Bash(npm --version)",
+      "Bash(gh --version)",
+      "Bash(gh api *)",
+      "Bash(python3 -c \"import json; json.load\\(open\\('/home/huyennk/khahhuynday/content/manifest.json'\\)\\); print\\('manifest.json OK'\\)\")",
+      "Bash(pkill -f \"http.server 8099\")",
+      "Bash(git -c user.name=\"huyennkAI\" -c user.email=\"khhuyen1601@gmail.com\" commit -q -m \"Khởi tạo website Chuyên đề Lý thuyết AI\")"
+    ]
+  }
+}
