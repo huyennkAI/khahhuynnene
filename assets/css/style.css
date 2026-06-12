@@ -10,8 +10,8 @@
   --accent-soft: #eef2ff;
   --code-bg: #f6f8fa;
   --topbar-h: 60px;
-  --sidebar-w: 320px;
-  --toc-w: 280px;
+  --sidebar-w: 280px;
+  --toc-w: 220px;
   --radius: 10px;
   --mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
   --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
@@ -105,8 +105,8 @@ a:hover { text-decoration: underline; }
 .layout {
   display: grid;
   grid-template-columns: var(--sidebar-w) minmax(0, 1fr) var(--toc-w);
-  max-width: 100%;
-  margin: 0;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 .sidebar {
@@ -115,7 +115,7 @@ a:hover { text-decoration: underline; }
   align-self: start;
   height: calc(100vh - var(--topbar-h));
   overflow-y: auto;
-  padding: 24px 10px 60px 8px;
+  padding: 24px 12px 60px 20px;
   border-right: 1px solid var(--border);
   background: var(--bg-sidebar);
 }
@@ -123,10 +123,10 @@ a:hover { text-decoration: underline; }
 .nav-group { margin-bottom: 20px; }
 .nav-group-title {
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.6px;
-  color: var(--accent);
+  color: var(--text-faint);
   padding: 6px 12px;
 }
 .nav-link {
@@ -146,7 +146,7 @@ a:hover { text-decoration: underline; }
   margin-top: var(--topbar-h);
 }
 
-.article { font-size: 16.5px; max-width: 800px; margin: 0 auto; }
+.article { font-size: 16.5px; }
 .article .loading { color: var(--text-faint); padding: 40px 0; }
 
 .article h1 { font-size: 2rem; margin: 0 0 .4em; line-height: 1.25; letter-spacing: -0.01em; }
