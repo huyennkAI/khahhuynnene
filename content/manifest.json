@@ -104,6 +104,20 @@
           "tags": ["diffusion", "ddpm", "denoising", "score matching"]
         },
         {
+          "slug": "ddim",
+          "title": "Mô hình khuếch tán ẩn (DDIM)",
+          "desc": "Quá trình thuận không Markov, lấy mẫu tất định, ODE và tăng tốc 10–50×.",
+          "file": "content/ddim.md",
+          "tags": ["ddim", "diffusion", "deterministic sampling", "ode", "non-markovian"]
+        },
+        {
+          "slug": "score-based-models",
+          "title": "Mô hình dựa trên điểm số (Score-Based)",
+          "desc": "Hàm điểm số, phân kỳ Fisher, denoising score matching, NCSN và góc nhìn SDE.",
+          "file": "content/score-based-models.md",
+          "tags": ["score matching", "score based model", "ncsn", "langevin", "sde", "diffusion"]
+        },
+        {
           "slug": "energy-based-models",
           "title": "Mô hình dựa trên năng lượng (Energy-Based)",
           "desc": "Phân phối Boltzmann, pha dương/âm, Langevin, score matching, NCE.",

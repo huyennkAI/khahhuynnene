@@ -237,7 +237,7 @@ $$J(\theta) = \mathbb{E}_{p_{\text{data}}}\left[ \frac{1}{2}\big\lVert \nabla_x 
 
 Số hạng thứ nhất phạt score quá lớn; số hạng vết Hessian (Laplacian) ràng buộc hình dạng. Cả hai chỉ dùng đạo hàm theo $x$ — không có $Z_\theta$ ở đâu cả.
 
-> Đây chính là cây cầu nối EBM với **mô hình khuếch tán (diffusion model)**: diffusion là một dạng score matching khử nhiễu (denoising score matching) ước lượng score trên **nhiều mức nhiễu** khác nhau.
+> Đây chính là cây cầu nối EBM với **mô hình khuếch tán (diffusion model)**: diffusion là một dạng score matching khử nhiễu (denoising score matching) ước lượng score trên **nhiều mức nhiễu** khác nhau. Toàn bộ mạch này — phân kỳ Fisher, định lý Hyvärinen, denoising score matching, NCSN và góc nhìn SDE — được khai triển đầy đủ ở bài **[Score-Based Models](#/score-based-models)**.
 
 ---
 

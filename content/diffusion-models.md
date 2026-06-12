@@ -337,4 +337,4 @@ Từ một quá trình thêm nhiễu Gauss có dạng đóng, kết hợp với 
 
 Diffusion đổi **tốc độ lấy mẫu** lấy **độ ổn định và chất lượng mẫu**. Với ảnh, đây hiện là lựa chọn thống trị; cái giá duy nhất là $T$ bước suy luận.
 
-> Bài cuối chuyên mục — **Energy-Based Models** — trình bày khung tổng quát nhất, nơi diffusion lộ ra chỉ là một trường hợp đặc biệt được huấn luyện khéo léo (qua denoising score matching ở mục 6).
+> Bài tiếp theo — **DDIM** — giữ nguyên mạng đã huấn luyện ở đây nhưng thay bộ lấy mẫu: khai thác việc $\mathcal{L}_{\text{simple}}$ chỉ phụ thuộc các phân phối biên để dựng một quá trình nghịch **tất định, nhảy bước được**, nhanh hơn 10–50 lần. Sau đó **Score-Based Models** sẽ tổng quát cả hai vào một khung SDE duy nhất.
