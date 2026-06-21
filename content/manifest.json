@@ -8,34 +8,215 @@
           "slug": "gioi-thieu",
           "title": "Giới thiệu",
           "desc": "Tổng quan website và bản đồ các chuyên đề lý thuyết AI.",
-          "file": "content/gioi-thieu.md",
+          "file": "content/01-bat-dau/01-gioi-thieu.md",
           "tags": ["overview", "ai"]
         },
         {
           "slug": "ai-la-gi",
           "title": "Trí tuệ nhân tạo là gì?",
           "desc": "Định nghĩa, lịch sử và phân loại các nhánh của AI.",
-          "file": "content/ai-la-gi.md",
+          "file": "content/01-bat-dau/02-ai-la-gi.md",
           "tags": ["ai", "khai niem", "lich su"]
         }
       ]
     },
     {
-      "title": "Học máy",
+      "title": "Học máy — Nền tảng",
       "items": [
         {
           "slug": "hoc-may-co-ban",
           "title": "Học máy cơ bản",
           "desc": "Học có giám sát, không giám sát, tăng cường và quy trình huấn luyện.",
-          "file": "content/hoc-may-co-ban.md",
+          "file": "content/02-hoc-may/01-hoc-may-co-ban.md",
           "tags": ["machine learning", "supervised", "unsupervised"]
         },
         {
           "slug": "ham-mat-mat-toi-uu",
           "title": "Hàm mất mát & Tối ưu hóa",
           "desc": "Loss function, gradient descent và lan truyền ngược.",
-          "file": "content/ham-mat-mat-toi-uu.md",
+          "file": "content/02-hoc-may/02-ham-mat-mat-toi-uu.md",
           "tags": ["loss", "gradient descent", "optimization"]
+        },
+        {
+          "slug": "feature-engineering",
+          "title": "Kỹ thuật đặc trưng (Feature Engineering)",
+          "desc": "Biểu diễn dữ liệu, chuẩn hóa, mã hóa và tạo đặc trưng cho mô hình.",
+          "file": "content/02-hoc-may/03-feature-engineering.md",
+          "tags": ["feature engineering", "preprocessing", "normalization"]
+        },
+        {
+          "slug": "overfitting",
+          "title": "Overfitting & Điều chuẩn",
+          "desc": "Đánh đổi thiên lệch–phương sai, L1/L2, dropout và cách chống quá khớp.",
+          "file": "content/02-hoc-may/04-overfitting.md",
+          "tags": ["overfitting", "regularization", "bias variance"]
+        },
+        {
+          "slug": "danh-gia-phan-loai",
+          "title": "Đánh giá hệ phân loại",
+          "desc": "Accuracy, Precision/Recall, F1, ma trận nhầm lẫn, ROC và AUC.",
+          "file": "content/02-hoc-may/05-danh-gia-phan-loai.md",
+          "tags": ["evaluation", "precision", "recall", "roc", "auc"]
+        }
+      ]
+    },
+    {
+      "title": "Toán cho Học máy",
+      "items": [
+        {
+          "slug": "xac-suat",
+          "title": "Ôn tập Xác suất",
+          "desc": "Biến ngẫu nhiên, kỳ vọng, Bayes và các phân phối thường gặp.",
+          "file": "content/02-hoc-may/06-xac-suat.md",
+          "tags": ["probability", "bayes", "distribution"]
+        },
+        {
+          "slug": "mle-map",
+          "title": "MLE & MAP",
+          "desc": "Ước lượng hợp lý cực đại và hậu nghiệm cực đại, vai trò của prior.",
+          "file": "content/02-hoc-may/07-mle-map.md",
+          "tags": ["mle", "map", "estimation", "prior"]
+        },
+        {
+          "slug": "convex-functions",
+          "title": "Tập lồi & Hàm lồi",
+          "desc": "Định nghĩa, tính chất và vì sao lồi là nền tảng của tối ưu.",
+          "file": "content/02-hoc-may/08-convex-functions.md",
+          "tags": ["convex", "optimization", "math"]
+        },
+        {
+          "slug": "convex-optimization",
+          "title": "Tối ưu lồi & Đối ngẫu",
+          "desc": "Bài toán lồi, nhân tử Lagrange, đối ngẫu và điều kiện KKT.",
+          "file": "content/02-hoc-may/09-convex-optimization.md",
+          "tags": ["convex optimization", "lagrange", "duality", "kkt"]
+        }
+      ]
+    },
+    {
+      "title": "Học máy — Học có giám sát",
+      "items": [
+        {
+          "slug": "linear-regression",
+          "title": "Hồi quy tuyến tính (Linear Regression)",
+          "desc": "Bình phương tối thiểu, nghiệm dạng đóng và phương trình chuẩn.",
+          "file": "content/02-hoc-may/10-linear-regression.md",
+          "tags": ["linear regression", "least squares", "regression"]
+        },
+        {
+          "slug": "perceptron",
+          "title": "Perceptron (PLA)",
+          "desc": "Thuật toán phân loại tuyến tính sơ khai, tiền thân của nơ-ron.",
+          "file": "content/02-hoc-may/11-perceptron.md",
+          "tags": ["perceptron", "pla", "linear classifier"]
+        },
+        {
+          "slug": "logistic-regression",
+          "title": "Hồi quy Logistic (Logistic Regression)",
+          "desc": "Phân loại nhị phân, hàm sigmoid và cross-entropy.",
+          "file": "content/02-hoc-may/12-logistic-regression.md",
+          "tags": ["logistic regression", "sigmoid", "classification"]
+        },
+        {
+          "slug": "softmax-regression",
+          "title": "Hồi quy Softmax (Softmax Regression)",
+          "desc": "Phân loại đa lớp, hàm softmax và cross-entropy tổng quát.",
+          "file": "content/02-hoc-may/13-softmax-regression.md",
+          "tags": ["softmax", "multiclass", "classification"]
+        },
+        {
+          "slug": "knn",
+          "title": "K-láng giềng gần nhất (KNN)",
+          "desc": "Học dựa trên mẫu, khoảng cách và đánh đổi của tham số K.",
+          "file": "content/02-hoc-may/14-knn.md",
+          "tags": ["knn", "k-nearest neighbors", "instance based"]
+        },
+        {
+          "slug": "naive-bayes",
+          "title": "Naive Bayes",
+          "desc": "Phân loại xác suất với giả định độc lập có điều kiện.",
+          "file": "content/02-hoc-may/15-naive-bayes.md",
+          "tags": ["naive bayes", "probabilistic", "classification"]
+        },
+        {
+          "slug": "decision-tree",
+          "title": "Cây quyết định (Decision Tree)",
+          "desc": "Entropy, information gain, ID3/CART và cắt tỉa.",
+          "file": "content/02-hoc-may/16-decision-tree.md",
+          "tags": ["decision tree", "id3", "entropy", "information gain"]
+        },
+        {
+          "slug": "svm",
+          "title": "Máy vector hỗ trợ (SVM)",
+          "desc": "Lề cực đại, bài toán đối ngẫu và vector hỗ trợ.",
+          "file": "content/02-hoc-may/17-svm.md",
+          "tags": ["svm", "max margin", "support vector"]
+        },
+        {
+          "slug": "kernel-svm",
+          "title": "Soft-margin & Kernel SVM",
+          "desc": "Lề mềm, kernel trick và phân loại phi tuyến.",
+          "file": "content/02-hoc-may/18-kernel-svm.md",
+          "tags": ["kernel svm", "soft margin", "kernel trick"]
+        },
+        {
+          "slug": "lda",
+          "title": "Phân tích biệt thức tuyến tính (LDA)",
+          "desc": "Tối đa hóa phân tách giữa lớp, vừa phân loại vừa giảm chiều.",
+          "file": "content/02-hoc-may/19-lda.md",
+          "tags": ["lda", "discriminant", "dimensionality reduction"]
+        }
+      ]
+    },
+    {
+      "title": "Học máy — Không giám sát & Giảm chiều",
+      "items": [
+        {
+          "slug": "kmeans",
+          "title": "Phân cụm K-means",
+          "desc": "Thuật toán Lloyd, hội tụ và ứng dụng phân cụm.",
+          "file": "content/02-hoc-may/20-kmeans.md",
+          "tags": ["kmeans", "clustering", "unsupervised"]
+        },
+        {
+          "slug": "pca",
+          "title": "Phân tích thành phần chính (PCA)",
+          "desc": "Giảm chiều theo phương sai cực đại, trị riêng của ma trận hiệp phương sai.",
+          "file": "content/02-hoc-may/21-pca.md",
+          "tags": ["pca", "dimensionality reduction", "variance"]
+        },
+        {
+          "slug": "svd",
+          "title": "Phân rã giá trị suy biến (SVD)",
+          "desc": "Phân tích ma trận, xấp xỉ hạng thấp và nền của PCA.",
+          "file": "content/02-hoc-may/22-svd.md",
+          "tags": ["svd", "matrix factorization", "low rank"]
+        }
+      ]
+    },
+    {
+      "title": "Học máy — Hệ gợi ý",
+      "items": [
+        {
+          "slug": "content-based-rec",
+          "title": "Gợi ý dựa trên nội dung",
+          "desc": "Mô tả item bằng đặc trưng, hồi quy theo từng người dùng.",
+          "file": "content/02-hoc-may/23-content-based-rec.md",
+          "tags": ["recommendation", "content based"]
+        },
+        {
+          "slug": "collaborative-filtering",
+          "title": "Lọc cộng tác (Collaborative Filtering)",
+          "desc": "Độ tương đồng người dùng/vật phẩm, neighborhood-based.",
+          "file": "content/02-hoc-may/24-collaborative-filtering.md",
+          "tags": ["collaborative filtering", "recommendation", "neighborhood"]
+        },
+        {
+          "slug": "matrix-factorization",
+          "title": "Phân rã ma trận cho gợi ý",
+          "desc": "Mô hình nhân tố ẩn, học biểu diễn người dùng và vật phẩm.",
+          "file": "content/02-hoc-may/25-matrix-factorization.md",
+          "tags": ["matrix factorization", "recommendation", "latent factor"]
         }
       ]
     },
@@ -46,14 +227,14 @@
           "slug": "mang-no-ron",
           "title": "Mạng nơ-ron nhân tạo",
           "desc": "Perceptron, hàm kích hoạt và kiến trúc mạng nhiều lớp.",
-          "file": "content/mang-no-ron.md",
+          "file": "content/03-hoc-sau/01-mang-no-ron.md",
           "tags": ["neural network", "deep learning", "perceptron"]
         },
         {
           "slug": "transformer",
           "title": "Kiến trúc Transformer",
           "desc": "Cơ chế self-attention và nền tảng của các mô hình ngôn ngữ lớn.",
-          "file": "content/transformer.md",
+          "file": "content/03-hoc-sau/02-transformer.md",
           "tags": ["transformer", "attention", "llm"]
         }
       ]
@@ -65,63 +246,63 @@
           "slug": "mo-hinh-sinh-tong-quan",
           "title": "Giới thiệu mô hình sinh sâu",
           "desc": "Sinh vs phân biệt, MLE = cực tiểu KL, bốn họ mô hình và tam giác đánh đổi.",
-          "file": "content/mo-hinh-sinh-tong-quan.md",
+          "file": "content/04-mo-hinh-sinh-sau/01-mo-hinh-sinh-tong-quan.md",
           "tags": ["generative model", "tong quan", "deep generative model", "mle", "kl"]
         },
         {
           "slug": "autoregressive-models",
           "title": "Mô hình tự hồi quy (Autoregressive)",
           "desc": "Quy tắc chuỗi, likelihood chính xác, nền của GPT - PixelCNN - WaveNet.",
-          "file": "content/autoregressive-models.md",
+          "file": "content/04-mo-hinh-sinh-sau/02-autoregressive-models.md",
           "tags": ["autoregressive", "chain rule", "gpt", "likelihood"]
         },
         {
           "slug": "normalizing-flows",
           "title": "Normalizing Flows",
           "desc": "Hàm khả nghịch, công thức đổi biến, likelihood chính xác và lấy mẫu nhanh.",
-          "file": "content/normalizing-flows.md",
+          "file": "content/04-mo-hinh-sinh-sau/03-normalizing-flows.md",
           "tags": ["normalizing flow", "change of variables", "realnvp", "glow"]
         },
         {
           "slug": "autoencoder-vae",
           "title": "Autoencoder & VAE",
           "desc": "Không gian ẩn, chứng minh ELBO, mẹo tái tham số hóa.",
-          "file": "content/autoencoder-vae.md",
+          "file": "content/04-mo-hinh-sinh-sau/04-autoencoder-vae.md",
           "tags": ["vae", "autoencoder", "elbo", "latent variable", "variational inference"]
         },
         {
           "slug": "gan",
           "title": "Mạng đối kháng sinh (GAN)",
           "desc": "Trò chơi minimax, chứng minh discriminator tối ưu và JS divergence.",
-          "file": "content/gan.md",
+          "file": "content/04-mo-hinh-sinh-sau/05-gan.md",
           "tags": ["gan", "adversarial", "generator", "discriminator", "js divergence"]
         },
         {
           "slug": "diffusion-models",
           "title": "Mô hình khuếch tán (Diffusion)",
           "desc": "Khử nhiễu dần, suy ra mục tiêu dự đoán nhiễu, nền của Stable Diffusion.",
-          "file": "content/diffusion-models.md",
+          "file": "content/04-mo-hinh-sinh-sau/06-diffusion-models.md",
           "tags": ["diffusion", "ddpm", "denoising", "score matching"]
         },
         {
           "slug": "ddim",
           "title": "Mô hình khuếch tán ẩn (DDIM)",
           "desc": "Quá trình thuận không Markov, lấy mẫu tất định, ODE và tăng tốc 10–50×.",
-          "file": "content/ddim.md",
+          "file": "content/04-mo-hinh-sinh-sau/07-ddim.md",
           "tags": ["ddim", "diffusion", "deterministic sampling", "ode", "non-markovian"]
         },
         {
           "slug": "score-based-models",
           "title": "Mô hình dựa trên điểm số (Score-Based)",
           "desc": "Hàm điểm số, phân kỳ Fisher, denoising score matching, NCSN và góc nhìn SDE.",
-          "file": "content/score-based-models.md",
+          "file": "content/04-mo-hinh-sinh-sau/08-score-based-models.md",
           "tags": ["score matching", "score based model", "ncsn", "langevin", "sde", "diffusion"]
         },
         {
           "slug": "energy-based-models",
           "title": "Mô hình dựa trên năng lượng (Energy-Based)",
           "desc": "Phân phối Boltzmann, pha dương/âm, Langevin, score matching, NCE.",
-          "file": "content/energy-based-models.md",
+          "file": "content/04-mo-hinh-sinh-sau/09-energy-based-models.md",
           "tags": ["energy based model", "ebm", "boltzmann", "langevin", "mcmc"]
         }
       ]
