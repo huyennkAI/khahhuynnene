@@ -221,21 +221,160 @@
       ]
     },
     {
-      "title": "Học sâu",
+      "title": "Học máy — Hàm mất mát & Đánh giá",
+      "items": [
+        {
+          "slug": "loss-functions",
+          "title": "Các hàm mất mát (Loss Functions)",
+          "desc": "MSE/MAE/Huber, cross-entropy, focal, hinge, contrastive — chọn loss theo bài toán.",
+          "file": "content/02-hoc-may/26-loss-functions.md",
+          "tags": ["loss function", "cross entropy", "mse", "focal loss", "hinge"]
+        },
+        {
+          "slug": "metrics-by-task",
+          "title": "Độ đo đánh giá theo bài toán",
+          "desc": "Hồi quy, xếp hạng/gợi ý, phát hiện, phân vùng, sinh ngôn ngữ/ảnh — chọn metric đúng.",
+          "file": "content/02-hoc-may/27-metrics-by-task.md",
+          "tags": ["evaluation", "rmse", "ndcg", "map", "bleu", "fid", "iou"]
+        }
+      ]
+    },
+    {
+      "title": "Học sâu — Nền tảng",
       "items": [
         {
           "slug": "mang-no-ron",
-          "title": "Mạng nơ-ron nhân tạo",
-          "desc": "Perceptron, hàm kích hoạt và kiến trúc mạng nhiều lớp.",
-          "file": "content/03-hoc-sau/01-mang-no-ron.md",
-          "tags": ["neural network", "deep learning", "perceptron"]
+          "title": "Mạng nơ-ron & MLP",
+          "desc": "Hidden layers, hàm kích hoạt ReLU/sigmoid/tanh và kiến trúc mạng nhiều lớp.",
+          "file": "content/03-hoc-sau/26-mang-no-ron.md",
+          "tags": ["neural network", "mlp", "activation function", "deep learning"]
+        },
+        {
+          "slug": "backprop",
+          "title": "Lan truyền ngược & Đồ thị tính toán",
+          "desc": "Forward propagation, computational graph, backprop từng bước và chain rule trong mạng.",
+          "file": "content/03-hoc-sau/27-backprop.md",
+          "tags": ["backpropagation", "computational graph", "chain rule", "gradient"]
+        },
+        {
+          "slug": "on-dinh-so",
+          "title": "Ổn định số & Khởi tạo tham số",
+          "desc": "Vanishing/exploding gradients, Xavier và He initialization.",
+          "file": "content/03-hoc-sau/28-on-dinh-so.md",
+          "tags": ["vanishing gradient", "exploding gradient", "xavier", "he initialization"]
+        },
+        {
+          "slug": "dieu-chuan-hoc-sau",
+          "title": "Điều chuẩn trong học sâu",
+          "desc": "Dropout, weight decay, early stopping và khi nào dùng cái nào.",
+          "file": "content/03-hoc-sau/29-dieu-chuan-hoc-sau.md",
+          "tags": ["dropout", "regularization", "weight decay", "early stopping"]
+        },
+        {
+          "slug": "toi-uu-hoc-sau",
+          "title": "Tối ưu hóa nâng cao",
+          "desc": "Momentum, AdaGrad, RMSProp, Adam và learning rate scheduling.",
+          "file": "content/03-hoc-sau/30-toi-uu-hoc-sau.md",
+          "tags": ["adam", "momentum", "rmsprop", "adagrad", "learning rate"]
+        }
+      ]
+    },
+    {
+      "title": "Học sâu — Mạng tích chập (CNN)",
+      "items": [
+        {
+          "slug": "tich-chap",
+          "title": "Tích chập & Mạng CNN",
+          "desc": "Cross-correlation, stride, padding, feature map và receptive field.",
+          "file": "content/03-hoc-sau/31-tich-chap.md",
+          "tags": ["cnn", "convolution", "kernel", "feature map", "receptive field"]
+        },
+        {
+          "slug": "kenh-pooling",
+          "title": "Đa kênh & Pooling",
+          "desc": "Multi-channel convolution, 1×1 conv, max pooling và average pooling.",
+          "file": "content/03-hoc-sau/32-kenh-pooling.md",
+          "tags": ["pooling", "channels", "1x1 convolution", "cnn"]
+        },
+        {
+          "slug": "kien-truc-cnn",
+          "title": "Kiến trúc CNN hiện đại",
+          "desc": "Hành trình từ LeNet đến ResNet: ý tưởng cốt lõi của từng bước nhảy vọt.",
+          "file": "content/03-hoc-sau/33-kien-truc-cnn.md",
+          "tags": ["lenet", "alexnet", "vgg", "resnet", "cnn architecture"]
+        },
+        {
+          "slug": "batch-norm",
+          "title": "Batch Normalization & Layer Norm",
+          "desc": "Vì sao cần chuẩn hóa trong mạng sâu, công thức, train vs inference.",
+          "file": "content/03-hoc-sau/34-batch-norm.md",
+          "tags": ["batch normalization", "layer norm", "training stability"]
+        }
+      ]
+    },
+    {
+      "title": "Học sâu — Mạng hồi quy (RNN)",
+      "items": [
+        {
+          "slug": "mo-hinh-chuoi",
+          "title": "Mô hình chuỗi & Ngôn ngữ",
+          "desc": "Autoregressive models, language model, perplexity và phân hoạch chuỗi.",
+          "file": "content/03-hoc-sau/35-mo-hinh-chuoi.md",
+          "tags": ["sequence model", "language model", "autoregressive", "perplexity"]
+        },
+        {
+          "slug": "rnn",
+          "title": "Mạng nơ-ron hồi quy (RNN)",
+          "desc": "Hidden state, BPTT, gradient clipping và vấn đề vanishing gradient trong RNN.",
+          "file": "content/03-hoc-sau/36-rnn.md",
+          "tags": ["rnn", "hidden state", "bptt", "vanishing gradient"]
+        },
+        {
+          "slug": "lstm-gru",
+          "title": "LSTM & GRU",
+          "desc": "Gated memory cell, forget/input/output gate và GRU như phiên bản đơn giản hóa.",
+          "file": "content/03-hoc-sau/37-lstm-gru.md",
+          "tags": ["lstm", "gru", "gated rnn", "long term dependency"]
+        },
+        {
+          "slug": "seq2seq",
+          "title": "Encoder–Decoder & Seq2Seq",
+          "desc": "Kiến trúc encoder-decoder, sequence-to-sequence learning và beam search.",
+          "file": "content/03-hoc-sau/38-seq2seq.md",
+          "tags": ["seq2seq", "encoder decoder", "beam search", "machine translation"]
+        }
+      ]
+    },
+    {
+      "title": "Học sâu — Attention & Transformer",
+      "items": [
+        {
+          "slug": "attention",
+          "title": "Cơ chế Attention",
+          "desc": "Query/Key/Value, scaled dot-product attention, additive attention và Bahdanau.",
+          "file": "content/03-hoc-sau/39-attention.md",
+          "tags": ["attention", "query key value", "bahdanau", "dot product attention"]
+        },
+        {
+          "slug": "multi-head-attention",
+          "title": "Multi-Head Attention & Self-Attention",
+          "desc": "Multi-head attention, self-attention, so sánh CNN/RNN/Attention và positional encoding.",
+          "file": "content/03-hoc-sau/40-multi-head-attention.md",
+          "tags": ["multi-head attention", "self attention", "positional encoding"]
         },
         {
           "slug": "transformer",
           "title": "Kiến trúc Transformer",
-          "desc": "Cơ chế self-attention và nền tảng của các mô hình ngôn ngữ lớn.",
-          "file": "content/03-hoc-sau/02-transformer.md",
-          "tags": ["transformer", "attention", "llm"]
+          "desc": "Encoder-decoder transformer, feed-forward sublayer, layer norm và residual connection.",
+          "file": "content/03-hoc-sau/41-transformer.md",
+          "tags": ["transformer", "attention", "encoder decoder", "layer norm"]
+        },
+        {
+          "slug": "llm-pretraining",
+          "title": "Tiền huấn luyện quy mô lớn",
+          "desc": "BERT (encoder-only), T5 (encoder-decoder), GPT (decoder-only) và scaling laws.",
+          "file": "content/03-hoc-sau/42-llm-pretraining.md",
+          "tags": ["bert", "gpt", "t5", "pretraining", "llm", "scaling law"]
         }
       ]
     },
