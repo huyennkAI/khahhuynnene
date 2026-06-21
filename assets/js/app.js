@@ -122,8 +122,17 @@
         var a = document.createElement("a");
         a.className = "nav-link";
         a.href = "#/" + it.slug;
-        a.textContent = it.title;
         a.dataset.slug = it.slug;
+        var idx = flat.findIndex(function (f) { return f.slug === it.slug; });
+        var num = (idx >= 0) ? String(idx + 1).padStart(2, '0') + '.' : '';
+        var spanNum = document.createElement('span');
+        spanNum.className = 'nav-num';
+        spanNum.textContent = num;
+        var spanTitle = document.createElement('span');
+        spanTitle.className = 'nav-title';
+        spanTitle.textContent = it.title;
+        a.appendChild(spanNum);
+        a.appendChild(spanTitle);
         group.appendChild(a);
       });
       nav.appendChild(group);
@@ -228,9 +237,11 @@
       html += '<h2 id="' + slugify(g.title) + '">' + escapeHtml(g.title) + '</h2>';
       html += '<div class="cards">';
       items.forEach(function (it) {
+        var idx = flat.findIndex(function (f) { return f.slug === it.slug; });
+        var num = (idx >= 0) ? String(idx + 1).padStart(2, '0') + '. ' : '';
         html += '<a class="card" href="#/' + it.slug + '">';
         html += '<div class="card-kicker">' + escapeHtml(g.title) + "</div>";
-        html += '<div class="card-title">' + escapeHtml(it.title) + "</div>";
+        html += '<div class="card-title"><span class="card-num">' + escapeHtml(num) + '</span>' + escapeHtml(it.title) + "</div>";
         html += '<p class="card-desc">' + escapeHtml(it.desc || "") + "</p>";
         html += "</a>";
       });
