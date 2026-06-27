@@ -221,21 +221,21 @@
       ]
     },
     {
-      "title": "Học máy — Hàm mất mát & Đánh giá",
+      "title": "Học máy — Loss & Metric theo bài toán",
       "items": [
         {
           "slug": "loss-functions",
-          "title": "Các hàm mất mát (Loss Functions)",
-          "desc": "MSE/MAE/Huber, cross-entropy, focal, hinge, contrastive — chọn loss theo bài toán.",
+          "title": "Các hàm mất mát theo bài toán (Loss Functions)",
+          "desc": "MSE, MAE, cross-entropy, hinge loss và nguồn gốc NLL của chúng theo từng giả định phân phối.",
           "file": "content/02-hoc-may/26-loss-functions.md",
-          "tags": ["loss function", "cross entropy", "mse", "focal loss", "hinge"]
+          "tags": ["loss function", "mse", "cross-entropy", "nll", "hinge loss"]
         },
         {
           "slug": "metrics-by-task",
-          "title": "Độ đo đánh giá theo bài toán",
-          "desc": "Hồi quy, xếp hạng/gợi ý, phát hiện, phân vùng, sinh ngôn ngữ/ảnh — chọn metric đúng.",
+          "title": "Độ đo đánh giá theo bài toán (Evaluation Metrics by Task)",
+          "desc": "Bản đồ tổng quan: regression, ranking, object detection, segmentation, NLG, sinh ảnh và clustering — chọn metric nào và vì sao.",
           "file": "content/02-hoc-may/27-metrics-by-task.md",
-          "tags": ["evaluation", "rmse", "ndcg", "map", "bleu", "fid", "iou"]
+          "tags": ["metrics", "evaluation", "mse", "map", "bleu", "ranking", "ndcg"]
         }
       ]
     },
@@ -445,6 +445,205 @@
           "tags": ["energy based model", "ebm", "boltzmann", "langevin", "mcmc"]
         }
       ]
+    },
+    {
+      "title": "Giải tích hàm — Không gian Banach",
+      "items": [
+        {
+          "slug": "khong-gian-banach",
+          "title": "Không gian Banach",
+          "desc": "Không gian vector vô hạn chiều, chuẩn hóa, đầy đủ và các ví dụ: ℓp, C(X).",
+          "file": "content/05-giai-tich-ham/01-khong-gian-banach.md",
+          "tags": ["banach space", "normed space", "completeness", "lp space"]
+        },
+        {
+          "slug": "toan-tu-tuyen-tinh-biet",
+          "title": "Toán tử tuyến tính bị chặn",
+          "desc": "Liên tục tương đương bị chặn, không gian toán tử B(X,Y) và không gian đối ngẫu X*.",
+          "file": "content/05-giai-tich-ham/02-toan-tu-tuyen-tinh-biet.md",
+          "tags": ["bounded linear operator", "dual space", "operator norm"]
+        },
+        {
+          "slug": "cac-dinh-ly-lon",
+          "title": "Bộ ba định lý lớn",
+          "desc": "Baire category theorem dẫn đến Uniform Boundedness, Open Mapping và Closed Graph.",
+          "file": "content/05-giai-tich-ham/03-cac-dinh-ly-lon.md",
+          "tags": ["baire category", "uniform boundedness", "open mapping", "closed graph"]
+        },
+        {
+          "slug": "hahn-banach",
+          "title": "Bổ đề Zorn & Hahn–Banach",
+          "desc": "Zorn's lemma, cơ sở Hamel, mở rộng phiếm hàm tuyến tính và đối ngẫu kép X**.",
+          "file": "content/05-giai-tich-ham/04-hahn-banach.md",
+          "tags": ["hahn-banach", "zorn lemma", "hamel basis", "double dual", "reflexivity"]
+        }
+      ]
+    },
+    {
+      "title": "Giải tích hàm — Lý thuyết đo & Tích phân Lebesgue",
+      "items": [
+        {
+          "slug": "do-ngoai-sigma-algebra",
+          "title": "Độ đo ngoài & Sigma-đại số",
+          "desc": "Giới hạn của Riemann, độ đo ngoài Lebesgue, sigma-đại số và Borel sigma-đại số.",
+          "file": "content/05-giai-tich-ham/05-do-ngoai-sigma-algebra.md",
+          "tags": ["outer measure", "sigma algebra", "borel", "lebesgue measure"]
+        },
+        {
+          "slug": "do-lebesgue",
+          "title": "Độ đo Lebesgue",
+          "desc": "Tập đo được Lebesgue, sigma-đại số Lebesgue chứa Borel, tính chất của độ đo.",
+          "file": "content/05-giai-tich-ham/06-do-lebesgue.md",
+          "tags": ["lebesgue measure", "measurable set", "measure theory"]
+        },
+        {
+          "slug": "tich-phan-lebesgue",
+          "title": "Tích phân Lebesgue",
+          "desc": "Hàm đo được, hàm đơn giản, tích phân hàm không âm, định lý hội tụ đơn điệu, Fatou và DCT.",
+          "file": "content/05-giai-tich-ham/07-tich-phan-lebesgue.md",
+          "tags": ["lebesgue integral", "monotone convergence", "fatou lemma", "dominated convergence"]
+        }
+      ]
+    },
+    {
+      "title": "Giải tích hàm — Không gian Hilbert",
+      "items": [
+        {
+          "slug": "khong-gian-lp",
+          "title": "Không gian Lp",
+          "desc": "Định nghĩa Lp, tính đầy đủ, bất đẳng thức Hölder & Minkowski và Cauchy–Schwarz.",
+          "file": "content/05-giai-tich-ham/08-khong-gian-lp.md",
+          "tags": ["lp space", "holder inequality", "minkowski", "cauchy-schwarz"]
+        },
+        {
+          "slug": "khong-gian-hilbert",
+          "title": "Không gian Hilbert & Chuỗi Fourier",
+          "desc": "Tích trong, cơ sở trực chuẩn, chuỗi Fourier trong L², định lý Fejér và hội tụ.",
+          "file": "content/05-giai-tich-ham/09-khong-gian-hilbert.md",
+          "tags": ["hilbert space", "inner product", "orthonormal basis", "fourier series", "fejer"]
+        },
+        {
+          "slug": "chieu-giao-va-riesz",
+          "title": "Chiếu giao & Định lý Riesz",
+          "desc": "Cực tiểu hóa trên tập lồi đóng, phần bù trực giao và định lý biểu diễn Riesz H* ≅ H.",
+          "file": "content/05-giai-tich-ham/10-chieu-giao-va-riesz.md",
+          "tags": ["projection", "orthogonal complement", "riesz representation", "hilbert space"]
+        }
+      ]
+    },
+    {
+      "title": "Giải tích hàm — Toán tử compact & Phổ",
+      "items": [
+        {
+          "slug": "toan-tu-compact",
+          "title": "Toán tử compact",
+          "desc": "Adjoint của toán tử bị chặn, tập compact trong Hilbert space và toán tử hạng hữu hạn.",
+          "file": "content/05-giai-tich-ham/11-toan-tu-compact.md",
+          "tags": ["compact operator", "adjoint", "finite rank", "hilbert space"]
+        },
+        {
+          "slug": "dinh-ly-pho",
+          "title": "Phổ & Định lý phổ",
+          "desc": "Tập phân giải và phổ, toán tử tự liên hợp compact, định lý phổ và bài toán Dirichlet.",
+          "file": "content/05-giai-tich-ham/12-dinh-ly-pho.md",
+          "tags": ["spectrum", "spectral theorem", "self-adjoint", "eigenvalue", "dirichlet problem"]
+        }
+      ]
+    },
+    {
+      "title": "Lý thuyết thông tin",
+      "items": [
+        {
+          "slug": "bai-1-dinh-nghia-entropy-va-thong-tin",
+          "title": "Bài 1: Định nghĩa Entropy và Thông tin",
+          "desc": "53:46 — Oxford Mathematics — 166K views • 1 year ago",
+          "file": "content/07-ly-thuyet-thong-tin/01-entropy-va-thong-tin.md",
+          "tags": ["information theory", "entropy", "information"]
+        },
+        {
+          "slug": "bai-2-tinh-chat-co-ban-cua-thong-tin",
+          "title": "Bài 2: Tính chất cơ bản của thông tin",
+          "desc": "50:55 — Oxford Mathematics — 20K views • 1 year ago",
+          "file": "content/07-ly-thuyet-thong-tin/02-tinh-chat-thong-tin.md",
+          "tags": ["information theory", "properties", "oxford mathematics"]
+        },
+        {
+          "slug": "bai-3-gioi-thieu-ve-ma",
+          "title": "Bài 3: Giới thiệu về mã (codes)",
+          "desc": "47:32 — Oxford Mathematics — 10K views • 1 year ago",
+          "file": "content/07-ly-thuyet-thong-tin/03-gioi-thieu-ma.md",
+          "tags": ["information theory", "codes", "encoding"]
+        },
+        {
+          "slug": "bai-4-day-dien-hinh",
+          "title": "Bài 4: Dãy điển hình (Typical sequences)",
+          "desc": "52:44 — Oxford Mathematics — 6.5K views • 1 year ago",
+          "file": "content/07-ly-thuyet-thong-tin/04-day-dien-hinh.md",
+          "tags": ["information theory", "typical sequences", "asymptotics"]
+        },
+        {
+          "slug": "bai-5-ma-toi-uu-va-ma-khoi",
+          "title": "Bài 5: Mã tối ưu và mã khối",
+          "desc": "50:09 — Oxford Mathematics — 4.4K views • 1 year ago",
+          "file": "content/07-ly-thuyet-thong-tin/05-ma-toi-uu-ma-khoi.md",
+          "tags": ["information theory", "optimal codes", "block coding"]
+        },
+        {
+          "slug": "bai-6-ma-shannon",
+          "title": "Bài 6: Mã Shannon",
+          "desc": "51:54 — Oxford Mathematics — 7K views • 1 year ago",
+          "file": "content/07-ly-thuyet-thong-tin/06-ma-shannon.md",
+          "tags": ["information theory", "shannon", "coding"]
+        },
+        {
+          "slug": "bai-7-ma-huffman-va-ma-so-hoc",
+          "title": "Bài 7: Mã Huffman và mã số học (Arithmetic)",
+          "desc": "51:24 — Oxford Mathematics — 5.1K views • 1 year ago",
+          "file": "content/07-ly-thuyet-thong-tin/07-ma-huffman-va-ma-so-hoc.md",
+          "tags": ["information theory", "huffman", "arithmetic coding"]
+        },
+        {
+          "slug": "bai-8-ma-tunstall",
+          "title": "Bài 8: Mã Tunstall",
+          "desc": "53:03 — Oxford Mathematics — 4.8K views • 1 year ago",
+          "file": "content/07-ly-thuyet-thong-tin/08-ma-tunstall.md",
+          "tags": ["information theory", "tunstall", "codes"]
+        }
+      ]
     }
+    ,
+    {
+    "title": "Lý thuyết Mixture of Experts (MoE) nâng cao",
+    "items": [
+      {
+        "slug": "moe-toan-hoc-khoi-dau",
+        "title": "Bài 1: Mô hình hóa Toán học cấu trúc MoE và Cấu trúc Cụm",
+        "desc": "Thiết lập bài toán toán học chặt chẽ lý giải sự vượt trội của MoE so với mạng Dense thông thường.",
+        "file": "content/06-moe-nang-cao/01-moe-toan-hoc-khoi-dau.md",
+        "tags": ["moe", "math", "cluster structure", "arxiv:2208.02813"]
+      },
+      {
+        "slug": "moe-router-learning",
+        "title": "Bài 2: Cơ chế Học của Router — Trích xuất tâm cụm",
+        "desc": "Chứng minh toán học về cách bộ định tuyến tự động chia nhỏ bài toán phi tuyến thành các bài toán tuyến tính.",
+        "file": "content/06-moe-nang-cao/02-moe-router-learning.md",
+        "tags": ["router", "gradient dynamics", "problem decomposition"]
+      },
+      {
+        "slug": "moe-expert-specialization",
+        "title": "Bài 3: Sự chuyên môn hóa của Expert và Định lý Chống sụp đổ",
+        "desc": "Chứng minh vai trò của tính phi tuyến và cơ chế phá vỡ đối xứng giúp các expert không bị trùng lặp tính năng.",
+        "file": "content/06-moe-nang-cao/03-moe-expert-specialization.md",
+        "tags": ["expert specialization", "non-collapse", "symmetry breaking"]
+      },
+      {
+        "slug": "moe-hien-dai-thuc-tien",
+        "title": "Bài 4: Mở rộng MoE Hiện đại — Từ Lý thuyết đến DeepSeek-MoE",
+        "desc": "Phân tích toán học hàm load balancing loss và kiến trúc chuyên gia mịn (Fine-grained / Shared experts).",
+        "file": "content/06-moe-nang-cao/04-moe-hien-dai-thuc-tien.md",
+        "tags": ["deepseek-moe", "load balancing", "auxiliary loss", "llm"]
+      }
+    ]
+  }
   ]
 }
